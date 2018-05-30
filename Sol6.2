@@ -1,0 +1,45 @@
+#Assignment 6.2 : Part 1
+#
+
+import pandas as pd
+#from pylab import *
+import matplotlib.pyplot as plt
+
+url='https://raw.githubusercontent.com/Geoyi/Cleaning-Titanic-Data/master/titanic_original.csv'
+#url='/home/arvind/Arv_Study/Acadgild/machine-learning/projects/titanic_survival_exploration/titanic_data.csv'
+table = pd.read_csv(url)
+#print(table.sex)
+
+# make a square figure and axes
+plt.figure(1, figsize=(6,6))
+
+fvsmc = table.groupby(['sex']).size()
+gender = [fvsmc.male, fvsmc.female]
+
+labels = 'Males', 'Females'
+
+plt.pie(gender, labels = labels, autopct='%1.1f%%')
+plt.title('pie chart presenting the male/female proportion')
+plt.show()
+
+#-------------------------------------------------------------------------
+#Assignment 6.2 Part 2
+#
+import pandas as pd
+#from pylab import *
+import matplotlib.pyplot as plt
+
+url='https://raw.githubusercontent.com/Geoyi/Cleaning-Titanic-Data/master/titanic_original.csv'
+table = pd.read_csv(url)
+
+df_male = table.groupby("sex").get_group('male')
+df_female = table.groupby("sex").get_group('female')
+
+fig, ax = plt.subplots(1,1,sharex=True,sharey=True)
+ax.scatter(df_male.age, df_male.fare, color="blue", alpha=0.5, label='Male')
+ax.scatter(df_female.age, df_female.fare, color="red", alpha=0.5, label='Female')
+ax.set_xlabel('Age')
+ax.set_ylabel('Fare')
+ax.legend()
+
+plt.show()
